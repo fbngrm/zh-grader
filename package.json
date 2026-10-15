@@ -1,0 +1,32 @@
+{
+  "name": "@fbngrm/zh-grader",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Chinese sentence vocabulary grading with separate HSK versions and inspectable word coverage.",
+  "type": "module",
+  "license": "MIT",
+  "repository": "github:fbngrm/zh-grader",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    }
+  },
+  "files": [
+    "src",
+    "bin",
+    "LICENSE",
+    "README.md"
+  ],
+  "bin": {
+    "zh-grader": "./bin/grade.mjs"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "opencc-js": "1.4.2"
+  }
+}
