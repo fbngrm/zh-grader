@@ -28,7 +28,9 @@ The default normalizer is identity; pass OpenCC for traditional Chinese input.
 ## Method and limits
 
 After optional normalization, `Intl.Segmenter('zh', {granularity:'word'})` splits
-the sentence. Tokens containing Chinese characters are looked up by exact spelling.
+the sentence, unless the sentence brings its own `words` (for example from a
+server-side segmenter): `grade({ text, words })` normalizes and grades those instead.
+Tokens containing Chinese characters are looked up by exact spelling.
 The sentence receives the highest token level only when every Chinese token is
 listed. Otherwise its level is null, and the result explains the unknown words.
 Coverage counts token occurrences, not unique words. Level 7 represents the 7–9 band.

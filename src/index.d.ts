@@ -1,6 +1,6 @@
 export interface HskLevels { hsk2?: number; hsk3?: number; hsk3_2025?: number; }
 export type HskData = Record<string, HskLevels>;
-export interface Sentence { text: string; id?: string | number; }
+export interface Sentence { text: string; id?: string | number; words?: string[]; }
 export interface Grade extends Sentence {
   normalized: string;
   tokens: { word: string; level: number | null }[];

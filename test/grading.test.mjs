@@ -15,6 +15,13 @@ test('known words use the highest level and ignore punctuation', () => {
     assert.equal(result.coverage, 1);
     assert.equal(result.tokens.length, 4);
 });
+test('pre-split words replace Intl.Segmenter', () => {
+    const g = createGrader({ 我: { hsk3_2025: 1 }, 想: { hsk3_2025: 1 }, 去: { hsk3_2025: 1 }, 图书馆: { hsk3_2025: 2 } }, (t) => t.replace('圖書館', '图书馆'));
+    const result = g({ text: '我想去圖書館。', words: ['我', '想', '去', '圖書館', '。'] });
+    assert.deepEqual(result.tokens.map((t) => t.word), ['我', '想', '去', '图书馆']);
+    assert.equal(result.level, 2);
+    assert.equal(result.coverage, 1);
+});
 test('unknown vocabulary never produces a misleading complete grade', () => {
     const result = grade({ text: '我爱阿斯匹林' });
     assert.equal(result.level, null);

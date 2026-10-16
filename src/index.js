@@ -18,9 +18,11 @@ export function createGrader(hsk, simplify = (text) => text, version = 'hsk3_202
     const segmenter = new Intl.Segmenter('zh', { granularity: 'word' });
     return (sentence) => {
         const normalized = simplify(sentence.text);
-        const tokens = [...segmenter.segment(normalized)].filter((s) => HAN.test(s.segment)).map(({ segment }) => ({
-            word: segment,
-            level: hsk[segment]?.[version] ?? null,
+        // Words split elsewhere (e.g. by a server-side segmenter) replace Intl.Segmenter.
+        const words = sentence.words ? sentence.words.map(simplify) : [...segmenter.segment(normalized)].map((s) => s.segment);
+        const tokens = words.filter((word) => HAN.test(word)).map((word) => ({
+            word,
+            level: hsk[word]?.[version] ?? null,
         }));
         const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, unlisted: 0 };
         for (const token of tokens) counts[token.level ?? 'unlisted']++;
